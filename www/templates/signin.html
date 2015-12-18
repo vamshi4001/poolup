@@ -1,0 +1,48 @@
+<style>
+	.profile-item {
+    text-align: center;
+  }
+
+  .profile-picture {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 3px;
+    border-radius: 100%;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+  }
+
+  .profile-picture img {
+    width: 128px;
+    border-radius: 100%;
+  }
+
+  .profile-name {
+    padding-top: 20px;
+    font-size: x-large !important;
+    font-weight: bold !important;
+    text-transform: capitalize;
+  }
+  .platform-android h2, .platform-android .h2, .platform-override h2, .platform-override .h2{
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+</style>
+<ion-content class="top padding has-header">
+  <div class="list card">
+      <ion-item class="profile-item">
+        <div class="profile-picture big-profile-picture">
+          <img src="img/profile.png">
+        </div>
+        <h2 class="profile-name dark">Odd Even</h2>
+        <div class="profile-info">
+          <p>Colaborative Carpooling</p>
+        </div>  
+        <button class="button button-block icon-left ion-social-facebook facebook-blue" ng-click="fbLogin()">Signin with Facebook</button>      
+      </ion-item>      
+  </div>
+</ion-content>

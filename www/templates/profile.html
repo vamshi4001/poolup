@@ -1,0 +1,96 @@
+<style>
+    .profile-item {
+    text-align: center;
+  }
+
+  .profile-picture {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 3px;
+    border-radius: 100%;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+  }
+
+  .profile-picture img {
+    width: 128px;
+    border-radius: 100%;
+  }
+
+  .profile-name {
+    padding-top: 20px;
+    font-size: x-large !important;
+    font-weight: bold !important;
+    text-transform: capitalize;
+  }
+  .platform-android h2, .platform-android .h2, .platform-override h2, .platform-override .h2{
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .padding{
+    top:90px;
+  }
+
+  .claim-info{
+    line-height: 30px;
+  }
+</style>
+<ion-view view-title="Profile">
+  <ion-content class="has-header has-tabs top padding">
+      <div class="list card">
+          <ion-item class="profile-item">
+            <div class="profile-picture big-profile-picture">
+              <img src="{{desiredDetails.avatar}}">
+            </div>
+            <h2 class="profile-name dark">{{desiredDetails.name}}</h2>
+            <div class="profile-info" ng-show="desiredDetails.email">
+              <p>Email: {{desiredDetails.email}}</p>              
+            </div>
+            <button class="button button-assertive button-full" ng-click="openModal(1)" ng-show="!enrolled">Enroll Now</button>
+            <button class="button button-assertive button-full" ng-click="openModal(1)" ng-show="enrolled">Edit Details</button>
+            <button class="button button-assertive button-full" ng-click="signout()">Signout</button>
+          </ion-item>
+          <!-- <div class="item item-text-wrap">
+            This is an agent profile, from which they can create an appointment for their respective pre policy health checks.
+          </div> -->
+      </div>
+  </ion-content>
+</ion-view>
+<script id="appointmentdetails.html" type="text/ng-template">
+  <div class="modal transparent">
+    <header class="bar bar-header bar-assertive">
+      <h1 class="title">Enrollment Form</h1>
+      <div class="button button-clear" ng-click="closeModal(1)"><span class="icon ion-close"></span></div>
+    </header>
+    <div class="card modal-card">      
+      <div class="item item-divider">
+        Enter your details
+      </div>
+      <div class="item item-text-wrap">
+        <div class="claim-info">
+          <div class="list">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Phone number</span>
+              <input type="number" placeholder="8019123141" ng-model="information.phonenumber">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Number Plate</span>
+              <input type="text" placeholder="DL 07 2231" ng-model="information.numberplate">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">Your Location</span>
+              <ion-google-place placeholder="Enter an address, Apt# and ZIP" ng-model="information.location" />
+            </label>            
+          </div>
+          <button class="button button-assertive button-full" ng-click="enroll()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+</script>
+<script id="orderstatus.html" type="text/ng-template">   
+</script>
