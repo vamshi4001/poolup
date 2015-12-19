@@ -19,9 +19,9 @@ angular.module("oyedelhi")
   } 
   $scope.enroll = function(){
     $ionicLoading.show()
+    var vehicleInfo = Parse.Object.extend("vehicleInfo");
+    var vehicle = new vehicleInfo();
     if($scope.enrolled){
-      var vehicleInfo = Parse.Object.extend("vehicleInfo");
-      var vehicle = new vehicleInfo();
       vehicle.id = $scope.enrolmentDetails.id;
       vehicle.set("platenumber",$scope.information.numberplate);
       vehicle.set("mobile",$scope.information.phonenumber);
@@ -37,16 +37,15 @@ angular.module("oyedelhi")
       });
     }
     else{
-      var vehicleInfo = Parse.Object.extend("vehicleInfo");
-      var vehicle = new vehicleInfo();
       vehicle.save({
         "platenumber":$scope.information.numberplate.toUpperCase(),
         "mobile":$scope.information.phonenumber,
         "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
         "userid":$scope.desiredDetails.username
       }).then(function(object){
-        $ionicLoading.hide();
-        console.log("Enrollment Done Successfully");
+        $ionicLoading.hide()
+        $scope.enrolled = true;
+        $scope.enrolmentDetails = object;
         $scope.closeModal(1);
       })
       var custom_acl = new Parse.ACL();
@@ -62,11 +61,19 @@ angular.module("oyedelhi")
     query.equalTo("userid", $scope.desiredDetails.username);
     query.first({
       success: function(object) {
-        $ionicLoading.hide()
-        $scope.enrolled = true;
-        $scope.enrolmentDetails = object;
+        if(object){
+          $ionicLoading.hide()
+          $scope.enrolled = true;
+          $scope.enrolmentDetails = object;
+        }        
+        else{
+          $ionicLoading.hide()
+          $scope.enrolled = false;
+          $scope.enrolmentDetails = {};
+        }
       },
       error: function(error) {
+        $ionicLoading.hide()
         console.log("Error: " + error.code + " " + error.message);
       }
     });
