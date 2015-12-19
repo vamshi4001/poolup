@@ -12,8 +12,8 @@ angular.module("oyedelhi", [
     'angularParse'])
 
 .run(function($ionicPlatform) {  
-  // Parse.initialize("dT5yb86GGYTNimERcwEvWUgwOwCofiVv6fUqxbq7", "UZ96bqWUaui215aRIQlnaAJ3OMLVFAcnGyiWJwUH");
-  Parse.initialize("LCl7WoAf8VO1ClzCcfKONQtr7eP3TX8f0hMwYrT7","diprUKtkGfwHw1i0cC3DseEaznuUItWNqZlMjKMx");
+  Parse.initialize("dT5yb86GGYTNimERcwEvWUgwOwCofiVv6fUqxbq7", "UZ96bqWUaui215aRIQlnaAJ3OMLVFAcnGyiWJwUH");
+  // Parse.initialize("LCl7WoAf8VO1ClzCcfKONQtr7eP3TX8f0hMwYrT7","diprUKtkGfwHw1i0cC3DseEaznuUItWNqZlMjKMx");
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
