@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module("oyedelhi")
 .controller('exploreController', function($rootScope, $scope, $stateParams, $location,$state, UtilitiesService,UserService, $ionicLoading){
   	$scope.$on('mapInitialized', function(event, map) {
     	$scope.map = map;

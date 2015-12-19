@@ -2165,7 +2165,8 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  */
 IonicModule
 .constant('$ionicLoadingConfig', {
-  template: '<ion-spinner></ion-spinner>'
+  template: '<ion-spinner></ion-spinner>',
+  noBackdrop:true,
 })
 .factory('$ionicLoading', [
   '$ionicLoadingConfig',
@@ -11257,7 +11258,7 @@ IonicModule
  * @usage
  *
  * ```html
- * <body ng-app="starter">
+ * <body ng-app="oyedelhi">
  *   <!-- The nav bar that will be updated as we navigate -->
  *   <ion-nav-bar class="bar-positive">
  *   </ion-nav-bar>

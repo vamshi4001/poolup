@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module("oyedelhi")
 
     .value('version', '0.1')
     .service("UserService", function ($http) {

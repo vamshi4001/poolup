@@ -1,13 +1,19 @@
-Parse.initialize("dT5yb86GGYTNimERcwEvWUgwOwCofiVv6fUqxbq7", "UZ96bqWUaui215aRIQlnaAJ3OMLVFAcnGyiWJwUH");
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// "oyedelhi" is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'ion-google-place'])
+angular.module("oyedelhi", [
+    'ionic', 
+    'ngCordova', 
+    'ion-google-place',
+    'angularParse'])
 
 .run(function($ionicPlatform) {  
+  // Parse.initialize("dT5yb86GGYTNimERcwEvWUgwOwCofiVv6fUqxbq7", "UZ96bqWUaui215aRIQlnaAJ3OMLVFAcnGyiWJwUH");
+  Parse.initialize("LCl7WoAf8VO1ClzCcfKONQtr7eP3TX8f0hMwYrT7","diprUKtkGfwHw1i0cC3DseEaznuUItWNqZlMjKMx");
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

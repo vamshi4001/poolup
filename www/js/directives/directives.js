@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module("oyedelhi")
 
 	.directive('appVersion', ['version', function (version) {
         return function (scope, elm, attrs) {

@@ -1,8 +1,10 @@
-angular.module("starter")
- 	.controller('signinController', ['$state','$scope','$rootScope', '$http', 'UserService','UtilitiesService', 'signupService',function ($state, $scope, $rootScope, $http, UserService, UtilitiesService, signupService) {
+angular.module("oyedelhi")
+ 	.controller('signinController', function ($state, $scope, $rootScope, $ionicLoading, $http, UserService, UtilitiesService, signupService) {
 	    $scope.fbLogin = function () {
+	    	$ionicLoading.show();
             signupService.fbSignUp().then(function(data){
+            	$ionicLoading.hide();
                 $state.go("app.profile")
             });
         }
-	}]);
+	});
