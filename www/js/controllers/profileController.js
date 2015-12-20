@@ -38,19 +38,19 @@ angular.module("oyedelhi")
         vehicle.save().then(function(success){
           $ionicLoading.hide();
           navigator.notification.alert(
-              'Enrolment done successfully!',  // message
-              $scope.closeModal(1),         // callback
-              'Enrolment Success',            // title
-              'Alrighty'                  // buttonName
+              'Enrolment done successfully!',
+              $scope.closeModal(1),         
+              'Enrolment Success', 
+              'Alrighty'
           );          
         },
         function(error){
           $ionicLoading.hide();
           navigator.notification.alert(
-              'Oops! Something went wrong!',  // message
-              $scope.closeModal(1),         // callback
-              'Enrolment Failed',            // title
-              'Alrighty'                  // buttonName
+              'Oops! Something went wrong!',
+              $scope.closeModal(1),
+              'Enrolment Failed',
+              'Alrighty'
           );          
           $scope.closeModal(1);
           console.log(error);
