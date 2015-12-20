@@ -4,7 +4,7 @@
 angular.module("oyedelhi")
     .controller('MapCtrl', function ($scope, $ionicLoading, $compile) {
 
-        $scope.init = function() {
+        $scope.init = function () {
             console.log("This is init");
             alert("This is init");
             var myLatlng = new google.maps.LatLng(43.07493, -89.381388);
@@ -49,6 +49,7 @@ angular.module("oyedelhi")
                 showBackdrop: false
             });
 
+            var options = {timeout: 30000, enableHighAccuracy: true, maximumAge: 10000};
             navigator.geolocation.getCurrentPosition(function (pos) {
                 $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
                 console.log(JSON.stringify(pos));
@@ -56,7 +57,7 @@ angular.module("oyedelhi")
                 $scope.loading.hide();
             }, function (error) {
                 alert('Unable to get location: ' + error.message);
-            });
+            }, options);
         };
 
         $scope.clickTest = function () {
