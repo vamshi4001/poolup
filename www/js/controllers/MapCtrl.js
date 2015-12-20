@@ -60,7 +60,7 @@ angular.module("oyedelhi")
                 showBackdrop: false
             });
 
-            var options = {timeout: 30000, enableHighAccuracy: true, maximumAge: 10000};
+            var options = {timeout: 3000, enableHighAccuracy: true, maximumAge: 10000};
             navigator.geolocation.getCurrentPosition(function (pos) {
                 $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
                 console.log(pos);
@@ -70,6 +70,7 @@ angular.module("oyedelhi")
                 $scope.addMarker({lat: pos.coords.latitude, lng: pos.coords.longitude});
 
             }, function (error) {
+                $scope.loading.hide();                
                 alert('Unable to get location: ' + error.message);
             }, options);
         };

@@ -19,7 +19,8 @@
       "locator": "https://github.com/apache/cordova-plugin-whitelist.git",
       "id": "phonegap-facebook-plugin"
     },
-    "cordova-plugin-geolocation"
+    "cordova-plugin-geolocation",
+    "cordova-plugin-dialogs"
   ],
   "cordovaPlatforms": [
     "android"

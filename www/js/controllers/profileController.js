@@ -1,9 +1,17 @@
 angular.module("oyedelhi")
 
-.controller('profileController', function($rootScope, $scope, $stateParams, $location,$state, UtilitiesService,UserService, $cordovaFacebook, $ionicModal, signupService, $ionicLoading, parseQuery){
+.controller('profileController', function($rootScope, $scope, $stateParams, $location,$state, UtilitiesService,UserService, $cordovaFacebook, $ionicModal, signupService, $ionicLoading, parseQuery, $cordovaToast){
   $scope.desiredDetails = {};  
   $scope.enrolled = false;
   $scope.enrolmentDetails = {};
+  function validationSuccess(){
+    if($scope.information.phonenumber && $scope.information.numberplate && $scope.information.location){
+      return true;
+    }
+    else{
+      return false;
+    }    
+  }
   $scope.setUserData = function(){
     $scope.desiredDetails = Parse.User.current().attributes; 
     $scope.fetchDetails();
@@ -21,38 +29,62 @@ angular.module("oyedelhi")
     $ionicLoading.show()
     var vehicleInfo = Parse.Object.extend("vehicleInfo");
     var vehicle = new vehicleInfo();
-    if($scope.enrolled){
-      vehicle.id = $scope.enrolmentDetails.id;
-      vehicle.set("platenumber",$scope.information.numberplate);
-      vehicle.set("mobile",$scope.information.phonenumber);
-      vehicle.set("location",new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()));
-      vehicle.save().then(function(success){
-        $ionicLoading.hide();
-        $scope.closeModal(1);
-      },
-      function(error){
-        $ionicLoading.hide();
-        $scope.closeModal(1);
-        console.log(error);
-      });
+    if(validationSuccess()){
+      if($scope.enrolled){
+        vehicle.id = $scope.enrolmentDetails.id;
+        vehicle.set("platenumber",$scope.information.numberplate);
+        vehicle.set("mobile",$scope.information.phonenumber);
+        vehicle.set("location",new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()));
+        vehicle.save().then(function(success){
+          $ionicLoading.hide();
+          navigator.notification.alert(
+              'Enrolment done successfully!',  // message
+              $scope.closeModal(1),         // callback
+              'Enrolment Success',            // title
+              'Alrighty'                  // buttonName
+          );          
+        },
+        function(error){
+          $ionicLoading.hide();
+          navigator.notification.alert(
+              'Oops! Something went wrong!',  // message
+              $scope.closeModal(1),         // callback
+              'Enrolment Failed',            // title
+              'Alrighty'                  // buttonName
+          );          
+          $scope.closeModal(1);
+          console.log(error);
+        });
+      }
+      else{
+        vehicle.save({
+          "platenumber":$scope.information.numberplate.toUpperCase(),
+          "mobile":$scope.information.phonenumber,
+          "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
+          "userid":$scope.desiredDetails.username
+        }).then(function(object){
+          $ionicLoading.hide()
+          $scope.enrolled = true;
+          $scope.enrolmentDetails = object;
+          $scope.closeModal(1);
+        })
+        var custom_acl = new Parse.ACL();
+        custom_acl.setWriteAccess( Parse.User.current(), true);
+        custom_acl.setReadAccess( Parse.User.current(), true);
+        custom_acl.setPublicReadAccess(false);
+        vehicle.setACL(custom_acl);
+      }    
     }
     else{
-      vehicle.save({
-        "platenumber":$scope.information.numberplate.toUpperCase(),
-        "mobile":$scope.information.phonenumber,
-        "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
-        "userid":$scope.desiredDetails.username
-      }).then(function(object){
-        $ionicLoading.hide()
-        $scope.enrolled = true;
-        $scope.enrolmentDetails = object;
-        $scope.closeModal(1);
-      })
-      var custom_acl = new Parse.ACL();
-      custom_acl.setWriteAccess( Parse.User.current(), true);
-      custom_acl.setPublicReadAccess(false);
-      vehicle.setACL(custom_acl);
-    }    
+      $ionicLoading.hide();
+      $cordovaToast
+        .show('Please fill all fields', 'long', 'center')
+        .then(function(success) {
+          // success
+        }, function (error) {
+          // error
+        });      
+    }
   }
   
   $scope.fetchDetails = function(){
