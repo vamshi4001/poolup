@@ -37,7 +37,18 @@ angular.module("oyedelhi")
             $scope.map = map;
         };
 
-        //google.maps.event.addDomListener(window, 'load', initialize);
+        /**
+         * Adds the marker with the specified coordinate
+         * @example : {lat : 12.11, lng: 11.1}
+         * @param coord
+         */
+        $scope.addMarker = function (coord) {
+            var marker = new google.maps.Marker({
+                position: coord,
+                map: $scope.map,
+                title: 'Hello World!'
+            });
+        };
 
         $scope.centerOnMe = function () {
             if (!$scope.map) {
@@ -52,9 +63,12 @@ angular.module("oyedelhi")
             var options = {timeout: 30000, enableHighAccuracy: true, maximumAge: 10000};
             navigator.geolocation.getCurrentPosition(function (pos) {
                 $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                console.log(JSON.stringify(pos));
-                alert(pos);
+                console.log(pos);
+                alert(JSON.stringify(pos));
                 $scope.loading.hide();
+
+                $scope.addMarker({lat: pos.coords.latitude, lng: pos.coords.longitude});
+
             }, function (error) {
                 alert('Unable to get location: ' + error.message);
             }, options);
