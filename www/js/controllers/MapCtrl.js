@@ -14,13 +14,14 @@ angular.module("oyedelhi")
                 title: 'Hello World!'
             });
         };
-        $scope.initiateMap = function(centerCoords){
+
+        $scope.initiateMap = function (centerCoords) {
             var mapOptions = {
                 center: centerCoords,
                 zoom: 13,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            var map = new google.maps.Map(document.getElementById("map"),mapOptions);
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
             //Infowindow and Angular compile 
             // var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
             // var compiled = $compile(contentString)($scope);
@@ -37,49 +38,69 @@ angular.module("oyedelhi")
             // });
             $scope.map = map;
             $scope.map.setCenter(centerCoords);
-            $ionicLoading.hide()
+            $ionicLoading.hide();
             $scope.addMarker({lat: centerCoords.lat(), lng: centerCoords.lng()}, "icon");
             $scope.fetchCoordinates();
-        }
+        };
+
         $scope.centerOnMe = function () {
-            $ionicLoading.show()
+            $ionicLoading.show();
             var options = {timeout: 3000, enableHighAccuracy: true, maximumAge: 10000};
             navigator.geolocation.getCurrentPosition(function (pos) {
                 $scope.currentLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude)
-                $scope.initiateMap($scope.currentLocation);                
+                $scope.initiateMap($scope.currentLocation);
             }, function (error) {
-                $ionicLoading.hide()                
+                $ionicLoading.hide();
                 navigator.notification.alert(
                     'Unable to get location!',
-                    $scope.locationFallback(),         
-                    'Location', 
+                    $scope.locationFallback(),
+                    'Location',
                     'Okay'
                 );
             }, options);
         };
-        $scope.locationFallback = function(){
-            $scope.initiateMap(new google.maps.LatLng(28.6540471,77.1732288));            
-        }
-        $scope.fetchCoordinates = function(){            
+        $scope.locationFallback = function () {
+            //This works only for Android 6.0 23+
+            //cordova.plugins.diagnostic.isLocationEnabled(function (enabled) {
+            //    console.log("Location is " + (enabled ? "enabled" : "disabled"));
+            //}, function (error) {
+            //    console.error("The following error occurred: " + error);
+            //    cordova.plugins.diagnostic.switchToLocationSettings();
+            //});
+
+            navigator.notification.alert(
+                'Please check your location settings!',  // message
+                function () {
+                    console.log("Dismissed Location alert.")
+                },         // callback
+                'Location Access',            // title
+                'Ok'                  // buttonName
+            );
+
+            $scope.initiateMap(new google.maps.LatLng(28.6540471, 77.1732288));
+        };
+
+        $scope.fetchCoordinates = function () {
             var vehicleInfo = Parse.Object.extend("vehicleInfo");
             var vehicle = new Parse.Query(vehicleInfo);
             var location = new Parse.GeoPoint($scope.currentLocation.lat(), $scope.currentLocation.lng());
             vehicle.withinKilometers("location", location, 5);
             vehicle.find({
-                success: function(objects) {                    
+                success: function (objects) {
                     console.log("after location");
                     console.log(objects);
                     $scope.locations = [];
-                    $.each(objects, function(i,v){
+                    $.each(objects, function (i, v) {
                         $scope.locations.push(new google.maps.LatLng(v.attributes.location._latitude, v.attributes.location._longitude));
-                        $scope.addMarker(new google.maps.LatLng(v.attributes.location._latitude, v.attributes.location._longitude))                        
-                    })                      
+                        $scope.addMarker(new google.maps.LatLng(v.attributes.location._latitude, v.attributes.location._longitude))
+                    })
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log("An error occured :(");
                 }
             });
-        }
+        };
+
         $scope.clickTest = function () {
             alert('Example of infowindow with ng-click')
         };
