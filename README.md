@@ -9,5 +9,3 @@
 
 * cordova-plugin-x-toast 2.3.1 "Toast"
 * cordova-plugin-dialogs 1.2.0 "Notification"
-
-* cordova.plugins.diagnostic 2.3.5 "Diagnostic"
