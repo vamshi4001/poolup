@@ -1,0 +1,22 @@
+<style>
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+
+    .scroll {
+        height: 100%;
+    }
+</style>
+
+<script src="//maps.googleapis.com/maps/api/js&sensor=false"></script>
+
+<ion-view view-title="Map" ng-init="init()">
+    <ion-content>
+        <div id="map" data-tap-disabled="true"></div>
+    </ion-content>
+    <ion-footer-bar class="bar-dark">
+        <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
+        <a ng-click="clickTest()" class="button button-icon icon ion-navigate">Test</a>
+    </ion-footer-bar>
+</ion-view>
