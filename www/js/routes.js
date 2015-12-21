@@ -30,18 +30,8 @@ angular.module("oyedelhi")
                 url: '/explore',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/explore.html',
-                        controller: 'exploreController'
-                    }
-                }
-            })
-
-            .state('app.map', {
-                url: '/map',
-                views: {
-                    'menuContent': {
                         templateUrl: 'templates/map.html',
-                        controller: 'MapCtrl'
+                        controller: 'mapController'
                     }
                 }
             })
@@ -56,5 +46,5 @@ angular.module("oyedelhi")
                 }
             });
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/signin');
+        $urlRouterProvider.otherwise('/app/explore');
     });

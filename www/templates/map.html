@@ -1,22 +1,39 @@
 <style>
-    #map {
+    #map, .list.card {
         width: 100%;
         height: 100%;
     }
-
     .scroll {
         height: 100%;
     }
+    .padding{
+        top:90px;
+    }
+      
 </style>
 
 <script src="//maps.googleapis.com/maps/api/js&sensor=false"></script>
-
 <ion-view view-title="Map" ng-init="centerOnMe()">
-    <ion-content>
-        <div id="map" data-tap-disabled="true"></div>
-    </ion-content>
-    <!-- <ion-footer-bar class="bar-dark">
-        <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
-        <a ng-click="clickTest()" class="button button-icon icon ion-navigate">Test</a>
-    </ion-footer-bar> -->
+    <ion-tabs class="tabs-top tabs-light">
+        <ion-tab title="Explore">
+            <ion-content class="has-header has-tabs top padding">
+                <div class="list card">
+                    <div id="map" data-tap-disabled="true"></div>
+                </div>
+            </ion-content>
+        </ion-tab>        
+        <ion-tab title="Browse">
+          <ion-content class="has-header has-tabs top padding">
+              <div class="list card">
+                <div class="list card">
+                    <div class="item item-avatar" ng-repeat="item in locations track by item.userid">
+                        <img src="img/profile.png">
+                        <h2>{{item.platenumber}}</h2>
+                        <p>Name: {{item.userid}}</p>
+                    </div>
+                </div>
+              </div>
+          </ion-content>          
+        </ion-tab>        
+    </ion-tabs>
 </ion-view>

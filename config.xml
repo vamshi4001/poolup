@@ -7,13 +7,14 @@
   <author email="mycollectinc@gmail.com" href="http://oddeven.mycollect.in/">
       MyCollect Inc
     </author>
-  <content src="http://192.168.0.103:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
+  <preference name="orientation" value="portrait"/>
   <preference name="SplashScreen" value="none"/>
   <preference name="SplashScreenDelay" value="3000"/>
   <feature name="StatusBar">
