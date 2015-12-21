@@ -2,7 +2,7 @@
  * Created by pradyumnad on 12/19/15.
  */
 angular.module("oyedelhi")
-    .controller('mapController', function ($scope, $ionicLoading, $compile) {
+    .controller('mapController', function ($scope, $ionicLoading, $compile, $cordovaToast) {
         $scope.currentLocation = null;
         var meimg = "img/me.png";
         var carsimg = "img/car.png";
@@ -62,24 +62,41 @@ angular.module("oyedelhi")
                 $scope.initiateMap($scope.currentLocation);
             }, function (error) {
                 $ionicLoading.hide();
-                navigator.notification.alert(
-                    'Enable location settings!',
-                    $scope.locationFallback(),
-                    'Location',
-                    'Settings'
+                navigator.notification.confirm(
+                    'Enable location settings!', // message
+                     onConfirm,            // callback to invoke with index of button pressed
+                    'Location',           // title
+                    ['Settings','No']     // buttonLabels
                 );
             }, options);
         };
-        function successCallback(response){
-            console.log(response);
+        function onConfirm(buttonIndex){
+            if(buttonIndex==1){                
+                setTimeout($scope.openLocationSettings(), 3000);
+            }
+            else{
+                $cordovaToast
+                    .show("Can't fetch location! Setting to defaults", 'long', 'center')
+                    .then(function(success) {}, function (error) {});      
+                $scope.initiateMap(new google.maps.LatLng(28.6540471, 77.1732288));
+            }
         }
-        function errorCallback(error){
-            console.log(error);
+        document.addEventListener("resume", onResume, false);
+        function onResume() {
+            console.log("forground aa gaya");
+            $scope.centerOnMe();
+        }        
+        function successCallback(){
+            console.log("opened settings");
         }
-        $scope.locationFallback = function () {
+        function errorCallback(){
+            $cordovaToast
+                    .show("Uh Oh! Something went wrong with settings", 'long', 'center')
+                    .then(function(success) {}, function (error) {});
+        }
+        $scope.openLocationSettings = function () {
             if(typeof cordova.plugins.settings.openSetting != undefined)
                 cordova.plugins.settings.openSetting("location_source", successCallback,errorCallback);
-            // $scope.initiateMap(new google.maps.LatLng(28.6540471, 77.1732288));
         };
         $scope.fetchCoordinates = function () {
             $ionicLoading.show();
