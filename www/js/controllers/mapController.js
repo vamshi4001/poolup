@@ -8,16 +8,16 @@ angular.module("oyedelhi")
         var carsimg = "img/car.png";
         var oldMarkers = [];
         // centerOnMe -> initiateMap -> fetchCoordinates n map them
-        var prevCenter;
-        $scope.addMeMarker = function (coord, icon) {
-            var marker = new google.maps.Marker({
-                position: coord,
-                map: $scope.map,
-                title: 'Hello World!',
-                icon:meimg
-            });
-            prevCenter = marker;
-        };
+        // var prevCenter;
+        // $scope.addMeMarker = function (coord, icon) {
+        //     var marker = new google.maps.Marker({
+        //         position: coord,
+        //         map: $scope.map,
+        //         title: 'Hello World!',
+        //         icon:meimg
+        //     });
+        //     prevCenter = marker;
+        // };
         $scope.addCarMarker = function (coord, icon) {
             var marker = new google.maps.Marker({
                 position: coord,
@@ -41,17 +41,17 @@ angular.module("oyedelhi")
             $scope.map.setCenter(centerCoords);
             $scope.map.setZoom($scope.map.getZoom());
             google.maps.event.addListener($scope.map, 'dragend', function() {
-                prevCenter.setMap(null);
+                // prevCenter.setMap(null);
                 var center = $scope.map.getCenter();
                 $scope.map.setCenter(center);
                 google.maps.event.trigger($scope.map, 'resize');
                 $scope.map.setZoom($scope.map.getZoom());
-                $scope.addMeMarker(center);
+                // $scope.addMeMarker(center);
                 $scope.currentLocation = center;      
                 $scope.fetchCoordinates();
             });
             $ionicLoading.hide();
-            $scope.addMeMarker({lat: centerCoords.lat(), lng: centerCoords.lng()}, "icon");
+            // $scope.addMeMarker({lat: centerCoords.lat(), lng: centerCoords.lng()}, "icon");
             $scope.fetchCoordinates();
         };
         $scope.centerOnMe = function () {

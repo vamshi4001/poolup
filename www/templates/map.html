@@ -9,7 +9,13 @@
     .padding{
         top:90px;
     }
-      
+    .me-pin{
+        display: inline;
+        position: absolute;
+        z-index: 999;
+        top: 43%;
+        left: 45%;
+    }
 </style>
 
 <script src="//maps.googleapis.com/maps/api/js&sensor=false"></script>
@@ -18,6 +24,7 @@
         <ion-tab title="Explore">
             <ion-content class="has-header has-tabs top padding">
                 <div class="list card">
+                    <img src="img/me.png" alt="" class="me-pin">
                     <div id="map" data-tap-disabled="true"></div>
                 </div>
             </ion-content>
