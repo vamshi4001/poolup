@@ -112,13 +112,21 @@ angular.module("oyedelhi")
             vehicle.withinKilometers("location", location, 5);
             vehicle.find({
                 success: function (objects) {
-                    console.log("after location");
-                    console.log(objects);
-                    $scope.locations = [];
-                    $.each(objects, function (i, v) {
-                        $scope.locations.push(v.attributes);
-                        $scope.addCarMarker(new google.maps.LatLng(v.attributes.location._latitude, v.attributes.location._longitude))
-                    })
+                    $scope.locations = [];                        
+                    if(objects.length>0){
+                        $cordovaToast
+                            .show(objects.length+" car"+(objects.length==1?'':'s')+ " found!", 'long', 'bottom')
+                            .then(function(success) {}, function (error) {});      
+                        $.each(objects, function (i, v) {
+                            $scope.locations.push(v.attributes);
+                            $scope.addCarMarker(new google.maps.LatLng(v.attributes.location._latitude, v.attributes.location._longitude))
+                        })                        
+                    }
+                    else{
+                        $cordovaToast
+                            .show("No cars available around you & try again after some time", 'long', 'bottom')
+                            .then(function(success) {}, function (error) {});      
+                    }
                     $ionicLoading.hide();
                 },
                 error: function (error) {

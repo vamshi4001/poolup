@@ -209,7 +209,7 @@ angular.module("oyedelhi")
             } 
         }
     })
-    .service("signupService", function($q, $cordovaFacebook, $log) {
+    .service("signupService", function($q, $cordovaFacebook, $log, $cordovaToast, $ionicLoading) {
         return {
           fbSignUp: fbSignUp,
           logOut: logOut
@@ -263,6 +263,10 @@ angular.module("oyedelhi")
 
         function facebookErr(err)  {          
           $log.error(err);
+          $cordovaToast
+                    .show("Unable to login! Clear data & try again after some time", 'long', 'center')
+                    .then(function(success) {}, function (error) {});      
+          $ionicLoading.hide();
           return $q.reject(err);
         }
 

@@ -31,15 +31,22 @@
         </ion-tab>        
         <ion-tab title="Browse">
           <ion-content class="has-header has-tabs top padding">
-              <div class="list card">
-                <div class="list card">
-                    <div class="item item-avatar" ng-repeat="item in locations track by item.userid">
+                <div class="list card" ng-show="locations.length==0">
+                    <div class="item item-avatar">
                         <img src="img/profile.png">
-                        <h2>{{item.platenumber}}</h2>
-                        <p>Name: {{item.userid}}</p>
+                        <h2>No cars available!</h2>
+                        <p>Please check after some time</p>
                     </div>
                 </div>
-              </div>
+                <div class="list card" ng-show="locations.length>0">
+                    <p style="padding:10px">Available cars in your area - we're working on helping you to call'em!</p>
+                    <div class="item item-icon-left item-icon-right" ng-repeat="item in locations track by item.userid">
+                        <i class="icon ion-model-s"></i>
+                        <h2>{{item.platenumber}}</h2>
+                        <p>Distance: 2kms</p>
+                        <i class="icon ion-ios-telephone-outline"></i>                        
+                    </div>                
+                </div>
           </ion-content>          
         </ion-tab>        
     </ion-tabs>
