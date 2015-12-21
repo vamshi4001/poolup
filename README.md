@@ -9,3 +9,5 @@
 
 * cordova-plugin-x-toast 2.3.1 "Toast"
 * cordova-plugin-dialogs 1.2.0 "Notification"
+
+* https://github.com/selahssea/Cordova-open-native-settings
