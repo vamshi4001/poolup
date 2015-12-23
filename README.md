@@ -17,12 +17,13 @@ Flow
 
 Signup->Enroll->Explore
 
-Enroll
+**Enroll**
+
 * Phone, Numberplate, From, To, Timings
 * Edit details
 * Show your car for pooling (show on map or not).
 
-Explore
+**Explore**
 * Fetch user location using Geolocation
 * If timeout and failed to get location - show alert using cordovaDialogs
 * If settings is clicked - open location setting using cordovaSettings
@@ -30,7 +31,7 @@ Explore
 * This will get location and fetch cars around you in radius of 5kms and enable=true
 * Show these markers on map and also the results in normal list view in Browse tab. Contact details are not exposed - Just the name and distance from you.
 
-Request - Response - Accept
+**Request - Response - Accept**
 * user can click on a car-marker and send a "Ride-Request"
 * recipient will get it in his bucket (later notification).
 * recipient can either ignore or can respond.
