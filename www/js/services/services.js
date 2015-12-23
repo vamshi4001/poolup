@@ -265,8 +265,8 @@ angular.module("oyedelhi")
           $log.error(err);
           $cordovaToast
                     .show("Unable to login! Clear data & try again after some time", 'long', 'center')
-                    .then(function(success) {}, function (error) {});      
-          $ionicLoading.hide();
+                    .then(function(success) {$ionicLoading.hide();}, function (error) {$ionicLoading.hide();});                
+          $ionicLoading.hide();                    
           return $q.reject(err);
         }
 

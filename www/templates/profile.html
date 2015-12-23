@@ -49,7 +49,7 @@
             <h2 class="profile-name dark">{{desiredDetails.name}}</h2>
             <div class="profile-info" ng-show="desiredDetails.email">
               <p>Email: {{desiredDetails.email}}</p>              
-            </div>
+            </div>              
             <button class="button button-assertive button-full" ng-click="openModal(1)" ng-show="!enrolled">Enroll Now</button>
             <div class="profile-info" ng-show="enrolled">
               <p>Phone: {{enrolmentDetails.attributes.mobile}}</p>
@@ -58,6 +58,15 @@
             </div>
             <!-- <button class="button button-assertive button-full" ng-click="signout()">Signout</button> -->
           </ion-item>
+          <div class="item item-toggle">
+             Show my car for pooling
+             <label class="toggle toggle-calm">
+               <input type="checkbox" ng-model="enable" ng-click="changeEnabled(enable)">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
+          </div>
           <!-- <div class="item item-text-wrap">
             This is an agent profile, from which they can create an appointment for their respective pre policy health checks.
           </div> -->

@@ -2,8 +2,28 @@ angular.module("oyedelhi")
 
 .controller('profileController', function($rootScope, $scope, $stateParams, $location,$state, UtilitiesService,UserService, $cordovaFacebook, $ionicModal, signupService, $ionicLoading, parseQuery, $cordovaToast){
   $scope.desiredDetails = {};  
+  $scope.enable = true;
   $scope.enrolled = false;
   $scope.enrolmentDetails = {};
+  $scope.changeEnabled = function(value){
+    var vehicleInfo =  Parse.Object.extend("vehicleInfo");
+    var vehicle = new Parse.Query(vehicleInfo);
+    vehicle.equalTo("userid", Parse.User.current().attributes.username);
+    vehicle.first({
+      success:function(object){
+        object.set("enable", value);
+        object.save();
+        $cordovaToast
+            .show("Preference updated successfully!", 'long', 'bottom')
+            .then(function(success) {}, function (error) {});      
+      },
+      error: function(error){
+        $cordovaToast
+            .show("No entry found! Please enroll yourself", 'long', 'bottom')
+            .then(function(success) {}, function (error) {});      
+      }
+    })
+  }
   function validationSuccess(){
     if($scope.information.phonenumber && $scope.information.numberplate && $scope.information.location){
       return true;
@@ -61,7 +81,7 @@ angular.module("oyedelhi")
           "platenumber":$scope.information.numberplate.toUpperCase(),
           "mobile":$scope.information.phonenumber,
           "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
-          "userid":$scope.desiredDetails.username
+          "userid":Parse.User.current().id
         }).then(function(object){
           $ionicLoading.hide()
           $scope.enrolled = true;
