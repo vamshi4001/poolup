@@ -110,6 +110,7 @@ angular.module("oyedelhi")
             var vehicle = new Parse.Query(vehicleInfo);
             var location = new Parse.GeoPoint($scope.currentLocation.lat(), $scope.currentLocation.lng());
             vehicle.withinKilometers("location", location, 5);
+            vehicle.equalTo("enable", true);
             vehicle.find({
                 success: function (objects) {
                     $scope.locations = [];                        

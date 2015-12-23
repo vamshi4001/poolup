@@ -2,7 +2,7 @@ angular.module("oyedelhi")
 
 .controller('profileController', function($rootScope, $scope, $stateParams, $location,$state, UtilitiesService,UserService, $cordovaFacebook, $ionicModal, signupService, $ionicLoading, parseQuery, $cordovaToast){
   $scope.desiredDetails = {};  
-  $scope.enable = true;
+  $scope.enable = false;
   $scope.enrolled = false;
   $scope.enrolmentDetails = {};
   $scope.changeEnabled = function(value){
@@ -117,6 +117,7 @@ angular.module("oyedelhi")
           $ionicLoading.hide()
           $scope.enrolled = true;
           $scope.enrolmentDetails = object;
+          $scope.enable = object.attributes.enable;
         }        
         else{
           $ionicLoading.hide()
