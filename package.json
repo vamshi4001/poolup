@@ -20,7 +20,9 @@
       "id": "phonegap-facebook-plugin"
     },
     "cordova-plugin-geolocation",
-    "cordova-plugin-dialogs"
+    "cordova-plugin-dialogs",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-x-toast"
   ],
   "cordovaPlatforms": [
     "android"
