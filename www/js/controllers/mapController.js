@@ -30,7 +30,7 @@ angular.module("oyedelhi")
 
             var User = Parse.Object.extend("User");
             var query = new Parse.Query(User);
-            query.equalTo("username", attributes.userid);
+            query.equalTo("objectId", attributes.userid);
             query.find({
                 success: function (user) {
                     // The object was retrieved successfully.

@@ -8,7 +8,7 @@ angular.module("oyedelhi")
   $scope.changeEnabled = function(value){
     var vehicleInfo =  Parse.Object.extend("vehicleInfo");
     var vehicle = new Parse.Query(vehicleInfo);
-    vehicle.equalTo("userid", Parse.User.current().attributes.username);
+    vehicle.equalTo("userid", Parse.User.current().id);
     vehicle.first({
       success:function(object){
         object.set("enable", value);
@@ -81,7 +81,7 @@ angular.module("oyedelhi")
           "platenumber":$scope.information.numberplate.toUpperCase(),
           "mobile":$scope.information.phonenumber,
           "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
-          "userid":Parse.User.current().attributes.username,
+          "userid":Parse.User.current().id,
           "enable":true
         }).then(function(object){
           $ionicLoading.hide()
@@ -111,7 +111,7 @@ angular.module("oyedelhi")
   $scope.fetchDetails = function(){
     $ionicLoading.show();
     var query = new Parse.Query("vehicleInfo");
-    query.equalTo("userid", $scope.desiredDetails.username);
+    query.equalTo("userid", Parse.User.current().id);
     query.first({
       success: function(object) {
         if(object){
