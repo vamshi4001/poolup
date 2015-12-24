@@ -45,6 +45,42 @@ angular.module("oyedelhi")
     $scope.information.phonenumber = $scope.enrolmentDetails.attributes.mobile;
     $scope.information.numberplate = $scope.enrolmentDetails.attributes.platenumber;
   } 
+  $scope.setCustomACL = function(data){
+    var custom_acl = new Parse.ACL();
+    custom_acl.setWriteAccess( Parse.User.current(), true);
+    // custom_acl.setReadAccess( Parse.User.current(), true);
+    custom_acl.setPublicReadAccess(true);
+    data.setACL(custom_acl);
+  }
+  $scope.updatePreferences = function(){
+    var vehicleInfo = Parse.Object.extend("vehicleInfo");
+    var vehicle = new vehicleInfo();
+    vehicle.id = $scope.enrolmentDetails.id;
+    vehicle.set("departure",$scope.information.departure.toLocaleTimeString());
+    vehicle.set("return",$scope.information.return.toLocaleTimeString());
+    vehicle.set("source",$scope.information.source.formatted_address);    
+    vehicle.save().then(function(success){
+      $ionicLoading.hide();
+      navigator.notification.alert(
+          'Preferences updated successfully!',
+          $scope.closeModal(3),         
+          'Preferences', 
+          'Great'
+      );          
+    },
+    function(error){
+      $ionicLoading.hide();
+      navigator.notification.alert(
+          'Oops! Something went wrong!',
+          $scope.closeModal(3),
+          'Update failed',
+          'Okay'
+      );          
+      $scope.closeModal(3);
+      console.log(error);
+    });
+    $scope.setCustomACL(vehicle);
+  }
   $scope.enroll = function(){
     $ionicLoading.show()
     var vehicleInfo = Parse.Object.extend("vehicleInfo");
@@ -55,6 +91,7 @@ angular.module("oyedelhi")
         vehicle.set("platenumber",$scope.information.numberplate);
         vehicle.set("mobile",$scope.information.phonenumber);
         vehicle.set("location",new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()));
+        vehicle.set("vehicle",$scope.information.vehicle);    
         vehicle.save().then(function(success){
           $ionicLoading.hide();
           navigator.notification.alert(
@@ -75,6 +112,7 @@ angular.module("oyedelhi")
           $scope.closeModal(1);
           console.log(error);
         });
+        $scope.setCustomACL(vehicle);
       }
       else{
         vehicle.save({
@@ -90,11 +128,7 @@ angular.module("oyedelhi")
           $scope.enable = $scope.enrolmentDetails.enable;
           $scope.closeModal(1);
         })
-        var custom_acl = new Parse.ACL();
-        custom_acl.setWriteAccess( Parse.User.current(), true);
-        // custom_acl.setReadAccess( Parse.User.current(), true);
-        custom_acl.setPublicReadAccess(true);
-        vehicle.setACL(custom_acl);
+        $scope.setCustomACL(vehicle);
       }    
     }
     else{
@@ -182,13 +216,24 @@ angular.module("oyedelhi")
   }).then(function(modal) {
       $scope.oModal2 = modal;
   });
+  // Modal 3
+  $ionicModal.fromTemplateUrl('traveldetails.html', {
+      id: '3', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+  }).then(function(modal) {
+      $scope.oModal3 = modal;
+  });
   $scope.openModal = function(index) {
       if (index == 1) $scope.oModal1.show();
-      else $scope.oModal2.show();
+      else if (index == 1) $scope.oModal2.show();
+      else $scope.oModal3.show();
   };
   $scope.closeModal = function(index) {
       if (index == 1) $scope.oModal1.hide();
-      else $scope.oModal2.hide();
+      else if (index == 2) $scope.oModal2.hide();
+      else $scope.oModal3.hide();
   };
   $scope.$on('modal.shown', function(event, modal) {
       console.log('Modal ' + modal.id + ' is shown!');

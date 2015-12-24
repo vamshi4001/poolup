@@ -38,6 +38,27 @@
   .claim-info{
     line-height: 30px;
   }
+  select.choice {
+      width: 100%;
+      color: white;
+      background: #ef473a;
+      border: #ef473a;
+      margin: 10px 0;
+      height: 38px;
+      font-family: circularBold;
+  }
+  .item-radio input:checked + .radio-content .item-content{
+    background: #ef473a;
+    color: white;
+    font-family: "circularBold"
+  }
+  .item-radio input:checked + .radio-content .radio-icon{
+    color: white;
+    font-family: "circularBold"
+  }
+  label.item.item-radio{
+    width: 40%;
+  }
 </style>
 <ion-view view-title="Profile">
   <ion-content class="has-header has-tabs top padding">
@@ -54,7 +75,11 @@
             <div class="profile-info" ng-show="enrolled">
               <p>Phone: {{enrolmentDetails.attributes.mobile}}</p>
               <p>Plate: {{enrolmentDetails.attributes.platenumber}}</p>              
-              <button class="button button-assertive button-full" ng-click="setExistingData();openModal(1)" ng-show="enrolled">Edit Details</button>
+              <div class="button-bar">
+                <button class="button button-outline button-assertive button-full" ng-click="setExistingData();openModal(1)" ng-show="enrolled">Edit Details</button>
+                <button class="button button-outline button-assertive button-full" ng-click="setExistingData();openModal(3)" ng-show="enrolled">Preferences</button>
+              </div>
+
             </div>
             <!-- <button class="button button-assertive button-full" ng-click="signout()">Signout</button> -->
           </ion-item>
@@ -95,14 +120,60 @@
               <input type="text" placeholder="Vehicle registration number" ng-model="information.numberplate">
             </label>
             <label class="item item-input item-stacked-label">
-              <span class="input-label">Your Location</span>
+              <span class="input-label">Your location</span>
+              <p>Your vehicle will be shown at this location.</p>
               <ion-google-place placeholder="Enter an address, Apt# and ZIP" ng-model="information.location" />
-            </label>            
+            </label> 
+            <label>
+              <span class="input-label"> Vehicle type</span> 
+              <ion-list>
+                <ion-radio ng-model="information.vehicle" ng-value="'Bike'">Bike</ion-radio>
+                <ion-radio ng-model="information.vehicle" ng-value="'Car'">Car</ion-radio>
+              </ion-list>  
+            </label>           
           </div>
           <button class="button button-assertive button-full" ng-click="enroll()">Submit</button>
         </div>
       </div>
-    </div>
+    </div>    
+  </div>  
+</script>
+<script id="traveldetails.html" type="text/ng-template">
+  <div class="modal transparent">
+    <header class="bar bar-header bar-assertive">
+      <h1 class="title">Trip Preferences</h1>
+      <div class="button button-clear" ng-click="closeModal(3)"><span class="icon ion-close"></span></div>
+    </header>
+    <div class="card modal-card">      
+      <div class="item item-divider">
+        Enter your details
+      </div>
+      <div class="item item-text-wrap">
+        <div class="claim-info">
+          <div class="list">
+            <p>You generally travel between</p>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">From location</span>
+              <ion-google-place placeholder="Eg: Chanakyapuri" ng-model="information.source" />
+            </label>            
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">To location</span>
+              <ion-google-place placeholder="Eg: Lajpat Nagar" ng-model="information.destination" />
+            </label>            
+            <p>between timings</p>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">From</span>
+              <input type="time" placeholder="Departure" ng-model="information.departure">
+            </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label">To</span>
+              <input type="time" placeholder="Return" ng-model="information.return">
+            </label>
+          </div>
+          <button class="button button-assertive button-full" ng-click="updatePreferences()">Update</button>
+        </div>
+      </div>
+    </div>    
   </div>  
 </script>
 <script id="orderstatus.html" type="text/ng-template">   
