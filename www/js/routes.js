@@ -10,6 +10,7 @@ angular.module("oyedelhi")
         $stateProvider
 
             .state('app', {
+                cache: true,
                 url: '/app',
                 abstract: true,
                 templateUrl: 'templates/menu.html',
@@ -17,6 +18,7 @@ angular.module("oyedelhi")
             })
 
             .state('app.signin', {
+                cache: true,
                 url: '/signin',
                 views: {
                     'menuContent': {
@@ -27,6 +29,7 @@ angular.module("oyedelhi")
             })
 
             .state('app.explore', {
+                cache: true,
                 url: '/explore',
                 views: {
                     'menuContent': {
@@ -37,6 +40,7 @@ angular.module("oyedelhi")
             })
 
             .state('app.profile', {
+                cache: false,
                 url: '/profile',
                 views: {
                     'menuContent': {

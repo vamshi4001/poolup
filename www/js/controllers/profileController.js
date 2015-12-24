@@ -81,11 +81,13 @@ angular.module("oyedelhi")
           "platenumber":$scope.information.numberplate.toUpperCase(),
           "mobile":$scope.information.phonenumber,
           "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
-          "userid":Parse.User.current().id
+          "userid":Parse.User.current().attributes.username,
+          "enable":true
         }).then(function(object){
           $ionicLoading.hide()
           $scope.enrolled = true;
           $scope.enrolmentDetails = object;
+          $scope.enable = $scope.enrolmentDetails.enable;
           $scope.closeModal(1);
         })
         var custom_acl = new Parse.ACL();
@@ -106,7 +108,6 @@ angular.module("oyedelhi")
         });      
     }
   }
-  
   $scope.fetchDetails = function(){
     $ionicLoading.show();
     var query = new Parse.Query("vehicleInfo");
@@ -149,10 +150,8 @@ angular.module("oyedelhi")
       else{
         cordova.plugins.diagnostic.switchToLocationSettings();
       }       
-    }
-    
+    }    
   };
-
   if(Parse.User.current()){
     $scope.setUserData();
   }
