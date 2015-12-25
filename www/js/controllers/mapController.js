@@ -7,21 +7,35 @@ angular.module("oyedelhi")
         var meimg = "img/me.png";
         var carsimg = "img/car.png";
         var oldMarkers = [];
+        function clone(obj) {
+            if (null == obj || "object" != typeof obj) return obj;
+            var copy = obj.constructor();
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+            }
+            return copy;
+        }
+        $scope.contactUser = function(data){
+            console.log(data);
+        }
         $scope.addCarMarker = function (attributes, icon) {
             var coord = new google.maps.LatLng(attributes.source._latitude, attributes.source._longitude);
-
             var marker = new google.maps.Marker({
                 position: coord,
                 map: $scope.map,
                 title: 'Hello World!',
                 icon: carsimg
             });
-
             var User = Parse.Object.extend("User");
             var query = new Parse.Query(User);
             query.equalTo("objectId", attributes.userid);
             query.first({
                 success: function (user) {
+                    var vehicleData = clone(attributes);
+                    var userData = clone(user.attributes);
+                    userData.id = user.id;
+                    vehicleData.user = userData;
+                    $scope.locations.push(vehicleData);                            
                     var contentString =
                         '<div id="content">' +
                         '<div id="bodyContent">' +
@@ -149,7 +163,6 @@ angular.module("oyedelhi")
                             }, function (error) {
                             });
                         $.each(objects, function (i, v) {
-                            $scope.locations.push(v.attributes);
                             $scope.addCarMarker(v.attributes)
                         })
                     }

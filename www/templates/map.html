@@ -16,6 +16,9 @@
         top: 43%;
         left: 45%;
     }
+    .item, .item h1, .item h2, .item h3, .item h4, .item h5, .item h6, .item p, .item-content, .item-content h1, .item-content h2, .item-content h3, .item-content h4, .item-content h5, .item-content h6, .item-content p{
+        white-space: normal;
+    }
 </style>
 
 <script src="//maps.googleapis.com/maps/api/js&sensor=false"></script>
@@ -30,7 +33,7 @@
             </ion-content>
         </ion-tab>        
         <ion-tab title="Browse">
-          <ion-content class="has-header has-tabs top padding">
+          <ion-content class="has-header has-tabs top padding" scroll="false">
                 <div class="list card" ng-show="locations.length==0">
                     <div class="item item-avatar">
                         <img src="img/profile.png">
@@ -40,12 +43,20 @@
                 </div>
                 <div class="list card" ng-show="locations.length>0">
                     <p style="padding:10px">Available cars in your area - we're working on helping you to call'em!</p>
-                    <div class="item item-icon-left item-icon-right" ng-repeat="item in locations track by item.userid">
-                        <i class="icon ion-model-s"></i>
-                        <h2>{{item.platenumber}}</h2>
-                        <p>Distance: 2kms</p>
-                        <i class="icon ion-ios-telephone-outline"></i>                        
-                    </div>                
+                    <ion-content>
+                        <div class="item item-icon-left item-icon-right" ng-repeat="item in locations track by item.userid">
+                            <i class="icon ion-model-s"></i>
+                            <h2>{{item.user.name}}</h2>
+                            <p>
+                                <span>Starts</span>
+                                <span ng-show="item.sourcename"> from {{item.sourcename}}</span>
+                                <span ng-show="item.departure"> at {{item.departure.split(":00 ").join(" ")}}</span> 
+                                <span ng-show="item.destination"> towards Rajbhavan</span>
+                                <span ng-show="item.return"> & returns at {{item.return.split(":00 ").join(" ")}}</span>
+                            </p>
+                            <i class="icon ion-ios-telephone-outline" ng-click="contactUser(item)"></i>                        
+                        </div> 
+                    </ion-content>               
                 </div>
           </ion-content>          
         </ion-tab>        
