@@ -7,6 +7,7 @@ angular.module("oyedelhi")
         var meimg = "img/me.png";
         var carsimg = "img/car.png";
         var oldMarkers = [];
+
         function clone(obj) {
             if (null == obj || "object" != typeof obj) return obj;
             var copy = obj.constructor();
@@ -15,9 +16,10 @@ angular.module("oyedelhi")
             }
             return copy;
         }
-        $scope.contactUser = function(data){
+
+        $scope.contactUser = function (data) {
             console.log(data);
-        }
+        };
         $scope.addCarMarker = function (attributes, icon) {
             var coord = new google.maps.LatLng(attributes.source._latitude, attributes.source._longitude);
             var marker = new google.maps.Marker({
@@ -35,21 +37,23 @@ angular.module("oyedelhi")
                     var userData = clone(user.attributes);
                     userData.id = user.id;
                     vehicleData.user = userData;
-                    $scope.locations.push(vehicleData);                            
+                    $scope.locations.push(vehicleData);
                     var contentString =
-                        '<div id="content">' +
-                        '<div id="bodyContent">' +
-                        '<img src="' + user.attributes.avatar + '" width="42" height="42">' +
-                        '<p>' + user.attributes.name + '</p>' +
-                        '<button class="button button-small button-assertive" ng-click="requestRide(' + user.attributes + ')">Request Ride</button>' +
-                        '</div>' +
-                        '</div>';
+                        "<div id='content'>" +
+                        "<div id='bodyContent'>" +
+                        "<img src='" + user.attributes.avatar + "' width='42' height='42' ng-click='clickTest()'>" +
+                        "<p>" + user.attributes.name + "</p>" +
+                            //"<a ng-click='requestRide('+user.attributes+')'>Click me!</a>" +
+                        "</div>" +
+                        "</div>";
                     var infowindow = new google.maps.InfoWindow({
-                        content: contentString
+                        content: contentString,
+                        zIndex: 1000
                     });
                     marker.addListener('click', function () {
                         infowindow.open($scope.map, marker);
                     });
+                    oldMarkers.push(marker);
                 },
                 error: function (object, error) {
                     // The object was not retrieved successfully.
@@ -57,9 +61,6 @@ angular.module("oyedelhi")
                     console.log(error);
                 }
             });
-
-
-            oldMarkers.push(marker);
         };
 
         $scope.initiateMap = function (centerCoords) {
@@ -182,7 +183,7 @@ angular.module("oyedelhi")
         };
 
         $scope.requestRide = function (user) {
-            alert("Requested" + user.username);
+            alert("Requested" + user);
         };
 
         $scope.clickTest = function () {

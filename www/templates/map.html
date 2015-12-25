@@ -26,9 +26,9 @@
     <ion-tabs class="tabs-top tabs-light">
         <ion-tab title="Explore">
             <ion-content class="has-header has-tabs top padding">
-                <div class="list card">
+                <div class="list card" data-tap-disabled="true">
                     <img src="img/me.png" alt="" class="me-pin">
-                    <div id="map" data-tap-disabled="true"></div>
+                    <div class="map" id="map" data-tap-disabled="true"></div>
                 </div>
             </ion-content>
         </ion-tab>        
@@ -54,6 +54,7 @@
                                 <span ng-show="item.destination"> towards Rajbhavan</span>
                                 <span ng-show="item.return"> & returns at {{item.return.split(":00 ").join(" ")}}</span>
                             </p>
+                            <input type='button' value='Request Ride' class='button button-block button-positive' ng-click='requestRide(item.user)'>
                             <i class="icon ion-ios-telephone-outline" ng-click="contactUser(item)"></i>                        
                         </div> 
                     </ion-content>               

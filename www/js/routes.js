@@ -39,6 +39,17 @@ angular.module("oyedelhi")
                 }
             })
 
+            .state('app.requests', {
+                cache: true,
+                url: '/requests',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/requests.html',
+                        controller: 'requestsController'
+                    }
+                }
+            })
+
             .state('app.profile', {
                 cache: false,
                 url: '/profile',
