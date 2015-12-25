@@ -96,18 +96,40 @@ angular.module("oyedelhi")
         $scope.setCustomACL(vehicle);
       }
       else{
+        
         vehicle.save({
-          "platenumber":$scope.information.numberplate.toUpperCase(),
           "mobile":$scope.information.phonenumber,
-          "location":new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()),
+          "platenumber":$scope.information.numberplate.toUpperCase(),
+          "source":new Parse.GeoPoint($scope.information.source.geometry.location.lat(), $scope.information.source.geometry.location.lng()),
+          "sourcename":$scope.information.source.formatted_address,
+          "destination":$scope.information.destination.formatted_address,
+          "departure":$scope.information.departure.toLocaleTimeString(),
+          "return":$scope.information.return.toLocaleTimeString(),
+          "vehicle":$scope.information.vehicle?$scope.information.vehicle:"Car",
           "userid":Parse.User.current().id,
           "enable":true
         }).then(function(object){
-          $ionicLoading.hide()
           $scope.enrolled = true;
           $scope.enrolmentDetails = object;
-          $scope.enable = $scope.enrolmentDetails.enable;
+          $scope.enable = $scope.enrolmentDetails.attributes.enable;         
+          $ionicLoading.hide();
+          navigator.notification.alert(
+              'Enrolment done successfully!',
+              $scope.closeModal(1),         
+              'Enrolment Success', 
+              'Alrighty'
+          ); 
+        },
+        function(error){
+          $ionicLoading.hide();
+          navigator.notification.alert(
+              'Oops! Something went wrong!',
+              $scope.closeModal(1),
+              'Enrolment Failed',
+              'Alrighty'
+          );          
           $scope.closeModal(1);
+          console.log(error);
         })
         $scope.setCustomACL(vehicle);
       }    
