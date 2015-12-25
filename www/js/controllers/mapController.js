@@ -7,19 +7,8 @@ angular.module("oyedelhi")
         var meimg = "img/me.png";
         var carsimg = "img/car.png";
         var oldMarkers = [];
-        // centerOnMe -> initiateMap -> fetchCoordinates n map them
-        // var prevCenter;
-        // $scope.addMeMarker = function (coord, icon) {
-        //     var marker = new google.maps.Marker({
-        //         position: coord,
-        //         map: $scope.map,
-        //         title: 'Hello World!',
-        //         icon:meimg
-        //     });
-        //     prevCenter = marker;
-        // };
         $scope.addCarMarker = function (attributes, icon) {
-            var coord = new google.maps.LatLng(attributes.location._latitude, attributes.location._longitude);
+            var coord = new google.maps.LatLng(attributes.source._latitude, attributes.source._longitude);
 
             var marker = new google.maps.Marker({
                 position: coord,
@@ -31,23 +20,16 @@ angular.module("oyedelhi")
             var User = Parse.Object.extend("User");
             var query = new Parse.Query(User);
             query.equalTo("objectId", attributes.userid);
-            query.find({
+            query.first({
                 success: function (user) {
-                    // The object was retrieved successfully.
-                    console.log(user);
-                    var u = user[0];
                     var contentString =
                         '<div id="content">' +
-                        '<div id="siteNotice">' +
-                        '</div>' +
-                        '<h3 id="firstHeading" class="firstHeading">' + u.attributes.name + '</h3>' +
                         '<div id="bodyContent">' +
-                        '<img src="' + u.attributes.avatar + '" width="42" height="42">' +
-                        '<p>' + attributes.platenumber + '</p>' +
-                        '<button class="button button-small button-assertive" ng-click="requestRide(' + u.attributes + ')">Request Ride</button>' +
+                        '<img src="' + user.attributes.avatar + '" width="42" height="42">' +
+                        '<p>' + user.attributes.name + '</p>' +
+                        '<button class="button button-small button-assertive" ng-click="requestRide(' + user.attributes + ')">Request Ride</button>' +
                         '</div>' +
                         '</div>';
-
                     var infowindow = new google.maps.InfoWindow({
                         content: contentString
                     });
@@ -155,7 +137,7 @@ angular.module("oyedelhi")
             var vehicleInfo = Parse.Object.extend("vehicleInfo");
             var vehicle = new Parse.Query(vehicleInfo);
             var location = new Parse.GeoPoint($scope.currentLocation.lat(), $scope.currentLocation.lng());
-            vehicle.withinKilometers("location", location, 5);
+            vehicle.withinKilometers("source", location, 5);
             vehicle.equalTo("enable", true);
             vehicle.find({
                 success: function (objects) {

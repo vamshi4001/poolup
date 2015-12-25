@@ -25,7 +25,12 @@ angular.module("oyedelhi")
     })
   }
   function validationSuccess(){
-    if($scope.information.phonenumber && $scope.information.numberplate && $scope.information.location){
+    if( $scope.information.phonenumber && 
+        $scope.information.numberplate && 
+        $scope.information.departure && 
+        $scope.information.return && 
+        $scope.information.source && 
+        $scope.information.destination){
       return true;
     }
     else{
@@ -44,6 +49,7 @@ angular.module("oyedelhi")
   $scope.setExistingData = function(){
     $scope.information.phonenumber = $scope.enrolmentDetails.attributes.mobile;
     $scope.information.numberplate = $scope.enrolmentDetails.attributes.platenumber;
+    $scope.information.vehicle = $scope.enrolmentDetails.attributes.vehicle;      
   } 
   $scope.setCustomACL = function(data){
     var custom_acl = new Parse.ACL();
@@ -52,35 +58,6 @@ angular.module("oyedelhi")
     custom_acl.setPublicReadAccess(true);
     data.setACL(custom_acl);
   }
-  $scope.updatePreferences = function(){
-    var vehicleInfo = Parse.Object.extend("vehicleInfo");
-    var vehicle = new vehicleInfo();
-    vehicle.id = $scope.enrolmentDetails.id;
-    vehicle.set("departure",$scope.information.departure.toLocaleTimeString());
-    vehicle.set("return",$scope.information.return.toLocaleTimeString());
-    vehicle.set("source",$scope.information.source.formatted_address);    
-    vehicle.save().then(function(success){
-      $ionicLoading.hide();
-      navigator.notification.alert(
-          'Preferences updated successfully!',
-          $scope.closeModal(3),         
-          'Preferences', 
-          'Great'
-      );          
-    },
-    function(error){
-      $ionicLoading.hide();
-      navigator.notification.alert(
-          'Oops! Something went wrong!',
-          $scope.closeModal(3),
-          'Update failed',
-          'Okay'
-      );          
-      $scope.closeModal(3);
-      console.log(error);
-    });
-    $scope.setCustomACL(vehicle);
-  }
   $scope.enroll = function(){
     $ionicLoading.show()
     var vehicleInfo = Parse.Object.extend("vehicleInfo");
@@ -88,10 +65,14 @@ angular.module("oyedelhi")
     if(validationSuccess()){
       if($scope.enrolled){
         vehicle.id = $scope.enrolmentDetails.id;
-        vehicle.set("platenumber",$scope.information.numberplate);
         vehicle.set("mobile",$scope.information.phonenumber);
-        vehicle.set("location",new Parse.GeoPoint($scope.information.location.geometry.location.lat(), $scope.information.location.geometry.location.lng()));
-        vehicle.set("vehicle",$scope.information.vehicle);    
+        vehicle.set("platenumber",$scope.information.numberplate);
+        vehicle.set("source",new Parse.GeoPoint($scope.information.source.geometry.location.lat(), $scope.information.source.geometry.location.lng()));
+        vehicle.set("sourcename",$scope.information.source.formatted_address);    
+        vehicle.set("destination",$scope.information.destination.formatted_address);    
+        vehicle.set("departure",$scope.information.departure.toLocaleTimeString());
+        vehicle.set("return",$scope.information.return.toLocaleTimeString());
+        vehicle.set("vehicle",$scope.information.vehicle?$scope.information.vehicle:"Car");    
         vehicle.save().then(function(success){
           $ionicLoading.hide();
           navigator.notification.alert(
@@ -206,24 +187,6 @@ angular.module("oyedelhi")
       animation: 'slide-in-up'
   }).then(function(modal) {
       $scope.oModal1 = modal;
-  });
-  // Modal 2
-  $ionicModal.fromTemplateUrl('orderstatus.html', {
-      id: '2', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      backdropClickToClose: false,
-      animation: 'slide-in-up'
-  }).then(function(modal) {
-      $scope.oModal2 = modal;
-  });
-  // Modal 3
-  $ionicModal.fromTemplateUrl('traveldetails.html', {
-      id: '3', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      backdropClickToClose: false,
-      animation: 'slide-in-up'
-  }).then(function(modal) {
-      $scope.oModal3 = modal;
   });
   $scope.openModal = function(index) {
       if (index == 1) $scope.oModal1.show();
