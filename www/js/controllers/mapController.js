@@ -2,7 +2,7 @@
  * Created by pradyumnad on 12/19/15.
  */
 angular.module("oyedelhi")
-    .controller('mapController', function ($scope, $ionicLoading, $compile, $cordovaToast) {
+    .controller('mapController', function ($scope, $ionicLoading, $compile, $cordovaToast, RequestService) {
         $scope.currentLocation = null;
         var meimg = "img/me.png";
         var carsimg = "img/car.png";
@@ -183,7 +183,7 @@ angular.module("oyedelhi")
         };
 
         $scope.requestRide = function (user) {
-            alert("Requested" + user);
+            RequestService.create(user);
         };
 
         $scope.clickTest = function () {

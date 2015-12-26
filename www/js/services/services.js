@@ -300,6 +300,63 @@ angular.module("oyedelhi")
                 .catch(facebookErr);
 
         }
-    });
+    })
+    .service("RequestService", function ($q, $cordovaFacebook, $log, $cordovaToast, $ionicLoading) {
+        return {
+            requestsFromMe: requestsFromMe,
+            requestsToMe: requestsToMe,
+            create: create
+        };
 
-    
+        function requestsFromMe(success, error) {
+            requests("from", success, error);
+        }
+
+        function requestsToMe(success, error) {
+            requests("to", success, error);
+        }
+
+        function requests(type, success, error) {
+            var Request = Parse.Object.extend("Request");
+            var query = new Parse.Query(Request);
+            query.equalTo(type, Parse.User.current());
+            query.notEqualTo("status", "ignored");
+            // Retrieve the most recent ones
+            query.descending("createdAt");
+
+            // Include the post data with each comment
+            query.include(["from", "to"]);
+
+            query.find({
+                success: function (object) {
+                    // Successfully retrieved the object.
+                    //console.log(object);
+                    success(object);
+                },
+                error: function (err) {
+                    alert("Error: " + err.code + " " + err.message);
+                    error(err);
+                }
+            });
+        }
+
+        function create(giver) {
+            //console.log(giver);
+            var Request = Parse.Object.extend("Request");
+            var request = new Request();
+            request.set("from", Parse.User.current());
+            request.set("to", {__type: "Pointer", className: "_User", objectId: giver.id});
+
+            request.save(null, {
+                success: function (request) {
+                    // Execute any logic that should take place after the object is saved.
+                    alert('New Request created with objectId: ' + request.id);
+                },
+                error: function (request, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and message.
+                    alert('Failed to create new Request, with error code: ' + error.message);
+                }
+            });
+        }
+    });

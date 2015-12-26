@@ -3,7 +3,6 @@ angular.module("oyedelhi")
         $scope.fbLogin = function () {
             $ionicLoading.show();
             signupService.fbSignUp().then(function (data) {
-                console.log(data);
                 UserService.setId(data.id);
                 $ionicLoading.hide();
                 $state.go("app.profile")
