@@ -1,45 +1,61 @@
+<style>
+    .scroll {
+        height: 100%;
+    }
+    .padding{
+        top:90px;
+    }
+</style>
 <ion-view view-title="Requests">
-    <ion-content class="has-header has-tabs top padding">
-        <ion-refresher
-                pulling-text="Pull to refresh..."
-                on-refresh="doRefresh()">
-        </ion-refresher>
-        <ion-list can-swipe="true">
-            <div class="item item-divider">
-                To Me
-            </div>
-            <ion-item class="item item-avatar" ng-repeat="req in toRequests">
-                <img src="{{req.attributes.from.attributes.avatar}}">
+    <ion-tabs class="tabs-top tabs-light">
+        <ion-tab title="Inbox">
+            <ion-content class="has-header has-tabs top padding">
+                <ion-refresher
+                        pulling-text="Pull to refresh..."
+                        on-refresh="doRefresh('tome')">
+                </ion-refresher>
+                <ion-list can-swipe="true">
+                    <div class="list card" ng-show="toRequests.length==0">
+                        <div class="item item-avatar">
+                            <img src="img/profile.png">
+                            <h2>No requests found</h2>
+                            <p>Please check after some time</p>
+                        </div>
+                    </div>
+                    <ion-item class="item item-avatar item-button-right" ng-repeat="req in toRequests">
+                        <img src="{{req.attributes.from.attributes.avatar}}">
+                        <h2>{{req.attributes.from.attributes.name}}</h2>
+                        <p>{{req.createdAt}}</p>
+                        <button class="button button-balanced button-outline" ng-click="chat(req, req.attributes.from)">Chat</button>
+                        <button class="button button-assertive button-outline" ng-click="ignoreRequest(req)">Ignore</button>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-tab>
+        <ion-tab title="Sent">
+            <ion-content class="has-header has-tabs top padding">
+                <ion-refresher
+                        pulling-text="Pull to refresh..."
+                        on-refresh="doRefresh('byme')">
+                </ion-refresher>
+                <ion-list can-swipe="true" class="padding">
+                    <div class="list card" ng-show="fromRequests.length==0">
+                        <div class="item item-avatar">
+                            <img src="img/profile.png">
+                            <h2>No requests found</h2>
+                            <p>Please check after some time</p>
+                        </div>
+                    </div>
+                    <ion-item class="item item-avatar item-button-right" ng-repeat="req in fromRequests">
+                        <img src="{{req.attributes.to.attributes.avatar}}">
+                        <h2>{{req.attributes.to.attributes.name}}</h2>
+                        <p>{{req.createdAt | date:'short'}}</p>                            
+                            <button class="button button-assertive button-outline" ng-click="takeAction(req)">Action</button>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-tab>
+    </ion-tabs>
 
-                <h2>{{req.attributes.from.attributes.name}}</h2>
-
-                <p>{{req.createdAt}}</p>
-                <ion-option-button class="button-positive"
-                                   ng-click="chat(req, req.attributes.from)">
-                    Chat
-                </ion-option-button>
-                <ion-option-button class="button-info"
-                                   ng-click="ignoreRequest(req)">
-                    Ignore
-                </ion-option-button>
-            </ion-item>
-
-            <div class="item item-divider">
-                From Me
-            </div>
-            <ion-item class="item item-avatar" ng-repeat="req in fromRequests">
-                <img src="{{req.attributes.to.attributes.avatar}}">
-
-                <h2>{{req.attributes.to.attributes.name}}</h2>
-
-                <p>{{req.createdAt | date:'short'}}</p>
-                <ion-option-button class="button-info" ng-click="ignoreRequest(req)">
-                    Ignore
-                </ion-option-button>
-                <ion-option-button class="button-positive" ng-click="chat(req, req.attributes.to)">
-                    Chat
-                </ion-option-button>
-            </ion-item>
-        </ion-list>
-    </ion-content>
+    
 </ion-view>

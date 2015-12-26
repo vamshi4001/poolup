@@ -317,6 +317,7 @@ angular.module("oyedelhi")
         }
 
         function requests(type, success, error) {
+            $ionicLoading.show();
             var Request = Parse.Object.extend("Request");
             var query = new Parse.Query(Request);
             query.equalTo(type, Parse.User.current());
@@ -329,8 +330,7 @@ angular.module("oyedelhi")
 
             query.find({
                 success: function (object) {
-                    // Successfully retrieved the object.
-                    //console.log(object);
+                    $ionicLoading.hide();
                     success(object);
                 },
                 error: function (err) {
@@ -341,7 +341,7 @@ angular.module("oyedelhi")
         }
 
         function create(giver) {
-            //console.log(giver);
+            $ionicLoading.show();
             var Request = Parse.Object.extend("Request");
             var request = new Request();
             request.set("from", Parse.User.current());
@@ -349,8 +349,11 @@ angular.module("oyedelhi")
 
             request.save(null, {
                 success: function (request) {
+                    $ionicLoading.hide();
                     // Execute any logic that should take place after the object is saved.
-                    alert('New Request created with objectId: ' + request.id);
+                    $cordovaToast
+                        .show('Request has been sent to '+giver.name, 'long', 'center')
+                        .then(function (success) {}, function (error) {});                                        
                 },
                 error: function (request, error) {
                     // Execute any logic that should take place if the save fails.

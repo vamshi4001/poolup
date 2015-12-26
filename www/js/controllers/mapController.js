@@ -112,9 +112,7 @@ angular.module("oyedelhi")
             else {
                 $cordovaToast
                     .show("Can't fetch location! Setting to defaults", 'long', 'center')
-                    .then(function (success) {
-                    }, function (error) {
-                    });
+                    .then(function (success) {}, function (error) {});
                 $scope.initiateMap(new google.maps.LatLng(28.6540471, 77.1732288));
             }
         }
