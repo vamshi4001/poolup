@@ -33,13 +33,11 @@
                 <h2>{{req.attributes.to.attributes.name}}</h2>
 
                 <p>{{req.createdAt | date:'short'}}</p>
-                <ion-option-button class="button-positive"
-                                   ng-click="chat(req)">
-                    Chat
-                </ion-option-button>
-                <ion-option-button class="button-info"
-                                   ng-click="ignoreRequest(req)">
+                <ion-option-button class="button-info" ng-click="ignoreRequest(req)">
                     Ignore
+                </ion-option-button>
+                <ion-option-button class="button-positive" ng-click="chat(req)">
+                    Chat
                 </ion-option-button>
             </ion-item>
         </ion-list>
