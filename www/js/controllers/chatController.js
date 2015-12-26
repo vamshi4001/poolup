@@ -4,50 +4,45 @@
 var app = angular.module("oyedelhi");
 app.controller('chatController', function ($rootScope, $scope, $stateParams,
                                            $location, $state, UtilitiesService,
-                                           RequestService, ChatService, $ionicLoading) {
+                                           RequestService, ChatService, $ionicLoading, $ionicScrollDelegate, $interval, $timeout) {
 
     $scope.message = "";
     $scope.messages = [];
+    var messageCheckTimer;
 
+    var viewScroll = $ionicScrollDelegate.$getByHandle('userMessageScroll');
     $scope.user = JSON.parse($stateParams.user);
 
-    console.log($stateParams.requestid);
-    console.log($stateParams.user);
-
-
+    $scope.closeKeyboard = function() {
+        cordova.plugins.Keyboard.close();
+    };
     $scope.fetchRequest = function (id) {
         var Request = Parse.Object.extend("Request");
         var query = new Parse.Query(Request);
         query.get($stateParams.requestid, {
             success: function (object) {
                 $scope.request = object;
-                console.log(object);
                 $scope.fetchMessages();
             },
             error: function (error) {
-                alert(error.message);
+                console.log(error.message);
             }
         });
     };
 
     $scope.saveMessage = function (content) {
-        console.log(content);
         ChatService.create(content, $scope.request, $scope.user, function (message) {
             $scope.message = "";
+            $scope.fetchRequest($stateParams.requestid);
         });
     };
 
     $scope.fetchMessages = function () {
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
         ChatService.messages($scope.request, function (results) {
-            console.log(results);
             $scope.messages = results;
-            $ionicLoading.hide();
+            $ionicScrollDelegate.scrollBottom(true);
         }, function (error) {
-            $ionicLoading.hide();
-            alert(error.message);
+            console.log(error.message);
         });
     };
 
@@ -56,8 +51,19 @@ app.controller('chatController', function ($rootScope, $scope, $stateParams,
         $scope.$broadcast('scroll.refreshComplete');
     };
 
-    $scope.$on('$ionicView.beforeEnter', function(){
-        // Any thing you can think of
+    $scope.$on('$ionicView.enter', function(){
         $scope.fetchRequest($stateParams.requestid);
+        messageCheckTimer = $interval(function() {
+            // here you could check for new messages 
+            //if your app doesn't use push notifications or user disabled them
+            $scope.fetchRequest($stateParams.requestid);
+        }, 30000);
+    });
+    $scope.$on('$ionicView.leave', function() {
+        // Make sure that the interval is destroyed
+        if (angular.isDefined(messageCheckTimer)) {
+            $interval.cancel(messageCheckTimer);
+            messageCheckTimer = undefined;
+        }
     });
 });

@@ -26,8 +26,7 @@
                         <img src="{{req.attributes.from.attributes.avatar}}">
                         <h2>{{req.attributes.from.attributes.name}}</h2>
                         <p>{{req.createdAt}}</p>
-                        <button class="button button-balanced button-outline" ng-click="chat(req, req.attributes.from)">Chat</button>
-                        <button class="button button-assertive button-outline" ng-click="ignoreRequest(req)">Ignore</button>
+                        <button class="button button-assertive button-outline" ng-click="takeAction(req)">Action</button>
                     </ion-item>
                 </ion-list>
             </ion-content>
@@ -46,11 +45,11 @@
                             <p>Please check after some time</p>
                         </div>
                     </div>
-                    <ion-item class="item item-avatar item-button-right" ng-repeat="req in fromRequests">
+                    <ion-item class="item item-avatar item-icon-right" ng-repeat="req in fromRequests">
                         <img src="{{req.attributes.to.attributes.avatar}}">
                         <h2>{{req.attributes.to.attributes.name}}</h2>
                         <p>{{req.createdAt | date:'short'}}</p>                            
-                            <button class="button button-assertive button-outline" ng-click="takeAction(req)">Action</button>
+                        <i class="icon ion-reply" ng-click="takeAction(req)"></i>
                     </ion-item>
                 </ion-list>
             </ion-content>

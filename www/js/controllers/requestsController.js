@@ -43,7 +43,7 @@ app.controller('requestsController', function ($rootScope, $scope, $stateParams,
         if (buttonIndex == 1) {
             $scope.chat($scope.selectedRequest, $scope.selectedRequest.attributes.to)
         }
-        else {
+        else if(buttonIndex ==2){
             $scope.ignoreRequest($scope.selectedRequest)
         }
     }
