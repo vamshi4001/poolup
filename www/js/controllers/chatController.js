@@ -9,6 +9,7 @@ app.controller('chatController', function ($rootScope, $scope, $stateParams,
     $scope.message = "";
     $scope.messages = [];
     var messageCheckTimer;
+    $scope.selectedRequestId = $stateParams.requestid;
 
     var viewScroll = $ionicScrollDelegate.$getByHandle('userMessageScroll');
     $scope.user = JSON.parse($stateParams.user);
@@ -57,7 +58,7 @@ app.controller('chatController', function ($rootScope, $scope, $stateParams,
             // here you could check for new messages 
             //if your app doesn't use push notifications or user disabled them
             $scope.fetchRequest($stateParams.requestid);
-        }, 30000);
+        }, 80000);
     });
     $scope.$on('$ionicView.leave', function() {
         // Make sure that the interval is destroyed
