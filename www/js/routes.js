@@ -50,6 +50,17 @@ angular.module("oyedelhi")
                 }
             })
 
+            .state('app.chat', {
+                cache: true,
+                url: '/chat:?requestid&user',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/chat.html',
+                        controller: 'chatController'
+                    }
+                }
+            })
+
             .state('app.profile', {
                 cache: false,
                 url: '/profile',

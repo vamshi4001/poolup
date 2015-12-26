@@ -359,4 +359,56 @@ angular.module("oyedelhi")
                 }
             });
         }
+    })
+    .service("ChatService", function ($q, $cordovaFacebook, $log, $cordovaToast, $ionicLoading) {
+        return {
+            messages: messages,
+            create: create
+        };
+
+        function messages(request, success, error) {
+            var Message = Parse.Object.extend("Message");
+            var query = new Parse.Query(Message);
+            query.equalTo("request", request);
+            // Retrieve the most recent ones
+            query.ascending("createdAt");
+
+            // Include the post data with each comment
+            query.include("from");
+
+            query.find({
+                success: function (object) {
+                    // Successfully retrieved the object.
+                    //console.log(object);
+                    success(object);
+                },
+                error: function (err) {
+                    alert("Error: " + err.code + " " + err.message);
+                    error(err);
+                }
+            });
+        }
+
+        function create(content, request, to, success) {
+            //console.log(giver);
+            var Message = Parse.Object.extend("Message");
+            var message = new Message();
+            message.set("text", content);
+            message.set("request", request);
+            message.set("from", Parse.User.current());
+            message.set("to", {__type: "Pointer", className: "_User", objectId: to.objectId});
+
+            message.save(null, {
+                success: function (message) {
+                    // Execute any logic that should take place after the object is saved.
+                    alert('New Message created with objectId: ' + message.id);
+                    success(message);
+                },
+                error: function (message, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and message.
+                    alert('Failed to create new Message, with error code: ' + error.message);
+                }
+            });
+        }
     });

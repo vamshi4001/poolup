@@ -1,0 +1,33 @@
+<ion-view title="{{user.name}}">
+    <ion-content has-header="true" padding="true" class="tabs-item-hide">
+        <ion-refresher
+                pulling-text="Pull for More Message..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+        <ion-list>
+            <ion-item class="item item-avatar" id="message_{{msg.id}}" ng-repeat="msg in messages">
+                <img src="{{msg.attributes.from.attributes.avatar}}" height="50" width="50">
+
+                <p style="float: right;">{{ msg.createdAt | date:'short'}}</p>
+
+                <h2>{{msg.attributes.from.attributes.name}}</h2>
+
+                <p>{{msg.attributes.text}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar>
+        <div class="list">
+            <label class="item item-input">
+                <input type="text" id="commentBox" placeholder="What do you want to say?" ng-model="message">
+            </label>
+        </div>
+        <div class="save-button">
+            <button class="button button-icon ion-paper-airplane" ng-disabled="!message || message === ''"
+                    ng-click="saveMessage(message)"></button>
+        </div>
+    </ion-footer-bar>
+    <div id="userObject" style="display: none;">
+        {{user}}
+    </div>
+</ion-view>

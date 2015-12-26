@@ -15,7 +15,7 @@
 
                 <p>{{req.createdAt}}</p>
                 <ion-option-button class="button-positive"
-                                   ng-click="chat(req)">
+                                   ng-click="chat(req, req.attributes.from)">
                     Chat
                 </ion-option-button>
                 <ion-option-button class="button-info"
@@ -36,7 +36,7 @@
                 <ion-option-button class="button-info" ng-click="ignoreRequest(req)">
                     Ignore
                 </ion-option-button>
-                <ion-option-button class="button-positive" ng-click="chat(req)">
+                <ion-option-button class="button-positive" ng-click="chat(req, req.attributes.to)">
                     Chat
                 </ion-option-button>
             </ion-item>

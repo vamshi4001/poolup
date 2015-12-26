@@ -41,7 +41,7 @@ app.controller('requestsController', function ($rootScope, $scope, $stateParams,
         });
     };
 
-    $scope.chat = function (req) {
-
+    $scope.chat = function (req, user) {
+        $state.go("app.chat", {requestid: req.id, user: JSON.stringify(user)})
     };
 });
