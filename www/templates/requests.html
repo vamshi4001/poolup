@@ -14,7 +14,7 @@
                         pulling-text="Pull to refresh..."
                         on-refresh="doRefresh('tome')">
                 </ion-refresher>
-                <ion-list can-swipe="true">
+                <ion-list can-swipe="true" class="padding">
                     <div class="list card" ng-show="toRequests.length==0">
                         <div class="item item-avatar">
                             <img src="img/profile.png">
@@ -22,11 +22,11 @@
                             <p>Please check after some time</p>
                         </div>
                     </div>
-                    <ion-item class="item item-avatar item-button-right" ng-repeat="req in toRequests">
+                    <ion-item class="item item-avatar item-icon-right" ng-repeat="req in toRequests">
                         <img src="{{req.attributes.from.attributes.avatar}}">
                         <h2>{{req.attributes.from.attributes.name}}</h2>
-                        <p>{{req.createdAt}}</p>
-                        <button class="button button-assertive button-outline" ng-click="takeAction(req)">Action</button>
+                        <p>{{req.createdAt | date:'short'}}</p>
+                        <i class="icon ion-reply" ng-click="takeAction(req,'inbox')"></i>
                     </ion-item>
                 </ion-list>
             </ion-content>
@@ -49,7 +49,7 @@
                         <img src="{{req.attributes.to.attributes.avatar}}">
                         <h2>{{req.attributes.to.attributes.name}}</h2>
                         <p>{{req.createdAt | date:'short'}}</p>                            
-                        <i class="icon ion-reply" ng-click="takeAction(req)"></i>
+                        <i class="icon ion-reply" ng-click="takeAction(req,'sent')"></i>
                     </ion-item>
                 </ion-list>
             </ion-content>

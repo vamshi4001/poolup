@@ -31,6 +31,9 @@
     margin-top: 0px;
     margin-bottom: 0px;
   }
+  .item, .item h1, .item h2, .item h3, .item h4, .item h5, .item h6, .item p, .item-content, .item-content h1, .item-content h2, .item-content h3, .item-content h4, .item-content h5, .item-content h6, .item-content p{
+        white-space: normal;
+    }
 </style>
 <ion-content class="top padding has-header">
   <div class="list card">
@@ -42,7 +45,11 @@
         <div class="profile-info">
           <p>Colaborative Carpooling</p>
         </div>  
-        <button class="button button-block icon-left ion-social-facebook facebook-blue" ng-click="fbLogin()">Signin with Facebook</button>      
+        <button class="button button-block icon-left ion-social-facebook facebook-blue" ng-click="fbLogin()">Signin with Facebook</button>     
+        <div class="profile-info">
+          <p>Trust us, we won't post anything.</p>
+          <p>By signing up, you agree to our terms and conditions of using this application</p>
+        </div>  
       </ion-item>      
   </div>
 </ion-content>

@@ -67,7 +67,11 @@
   }
 </style>
 <ion-view view-title="Profile">
-  <ion-content class="has-header has-tabs top padding">
+  <ion-nav-buttons side="primary">
+    <button class="button button-large button-icon icon ion-compose" ng-click="setExistingData();openModal(1)" ng-show="enrolled">      
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="has-header has-tabs top">
       <div class="list card">
           <ion-item class="profile-item">
             <div class="profile-picture big-profile-picture">
@@ -81,8 +85,7 @@
             <div class="profile-info" ng-show="enrolled">
               <p>Phone: {{enrolmentDetails.attributes.mobile}}</p>
               <p>Plate: {{enrolmentDetails.attributes.platenumber}}</p>              
-              <button class="button button-outline button-assertive button-block" ng-click="setExistingData();openModal(1)" ng-show="enrolled">Edit Details</button>
-              <!-- <button class="button button-outline button-assertive button-full" ng-click="setExistingData();openModal(3)" ng-show="enrolled">Preferences</button> -->
+              <button class="button button-outline button-assertive button-block" href="#/app/explore" ng-show="enrolled">Explore Around</button>              
             </div>            
           </ion-item>
           <div class="item item-toggle" ng-show="enrolled">

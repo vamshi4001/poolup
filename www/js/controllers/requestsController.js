@@ -30,14 +30,29 @@ app.controller('requestsController', function ($rootScope, $scope, $stateParams,
         $scope.$broadcast('scroll.refreshComplete');
     };
 
-    $scope.takeAction = function(request){
+    $scope.takeAction = function(request, source){
         $scope.selectedRequest = request;
-        navigator.notification.confirm(
-            'Action on request from '+request.attributes.to.attributes.name, // message
-            onActionTaken,            // callback to invoke with index of button pressed
-            'Request Action',           // title
-            ['Chat', 'Ignore']     // buttonLabels
-        )
+        switch(source){
+            case 'inbox':
+                navigator.notification.confirm(
+                    'Action on request from '+request.attributes.to.attributes.name, // message
+                    onActionTaken,            // callback to invoke with index of button pressed
+                    'Request Action',           // title
+                    ['Chat', 'Ignore']     // buttonLabels
+                )
+            break;
+            case 'sent':
+                navigator.notification.confirm(
+                    'Action on request from '+request.attributes.to.attributes.name, // message
+                    onActionTaken,            // callback to invoke with index of button pressed
+                    'Request Action',           // title
+                    ['Message']     // buttonLabels
+                )
+            break;
+            default:
+                console.log("request in progress");
+            break;
+        }
     }
     function onActionTaken(buttonIndex) {
         if (buttonIndex == 1) {

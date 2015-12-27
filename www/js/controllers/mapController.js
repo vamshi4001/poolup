@@ -41,9 +41,9 @@ angular.module("oyedelhi")
                     var contentString =
                         "<div id='content'>" +
                         "<div id='bodyContent'>" +
-                        "<img src='" + user.attributes.avatar + "' width='42' height='42' ng-click='clickTest()'>" +
+                        "<img src='" + user.attributes.avatar + "' width='42' height='42' style='border-radius:50px;'>" +
                         "<p>" + user.attributes.name + "</p>" +
-                            //"<a ng-click='requestRide('+user.attributes+')'>Click me!</a>" +
+                        // "<button ng-click='requestRide("+user+")>Request</button>" +
                         "</div>" +
                         "</div>";
                     var infowindow = new google.maps.InfoWindow({
@@ -156,14 +156,24 @@ angular.module("oyedelhi")
                 success: function (objects) {
                     $scope.locations = [];
                     if (objects.length > 0) {
-                        $cordovaToast
-                            .show(objects.length + " car" + (objects.length == 1 ? '' : 's') + " found!", 'long', 'bottom')
-                            .then(function (success) {
-                            }, function (error) {
-                            });
+                        var number = 0;
                         $.each(objects, function (i, v) {
-                            $scope.addCarMarker(v.attributes)
+                            if(v.attributes.userid!=Parse.User.current().id){
+                                number++;
+                                $scope.addCarMarker(v.attributes);
+                            }                            
                         })
+                        if(number>0){
+                            $cordovaToast
+                            .show(number + " car" + (objects.length == 1 ? '' : 's') + " found!", 'long', 'bottom')
+                            .then(function (success) {}, function (error) {});
+                        }
+                        else{
+                            $cordovaToast
+                            .show("No cars available around you & try again after some time", 'long', 'bottom')
+                            .then(function (success) {}, function (error) {});    
+                        }
+                        
                     }
                     else {
                         $cordovaToast

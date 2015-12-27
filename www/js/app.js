@@ -11,8 +11,8 @@ angular.module("oyedelhi", [
     'angularParse'])
 
     .run(function ($ionicPlatform) {
-        // Parse.initialize("dT5yb86GGYTNimERcwEvWUgwOwCofiVv6fUqxbq7", "UZ96bqWUaui215aRIQlnaAJ3OMLVFAcnGyiWJwUH"); //Production
-        Parse.initialize("NMOIoPrD327pbokZmtN5GNxopESGCXvpIAn3jxxk", "abANilseoYmdBJtKYbsI9rhzqoXM8xIlGpbPp8cp"); //Staging
+        Parse.initialize("dT5yb86GGYTNimERcwEvWUgwOwCofiVv6fUqxbq7", "UZ96bqWUaui215aRIQlnaAJ3OMLVFAcnGyiWJwUH"); //Production
+        // Parse.initialize("NMOIoPrD327pbokZmtN5GNxopESGCXvpIAn3jxxk", "abANilseoYmdBJtKYbsI9rhzqoXM8xIlGpbPp8cp"); //Staging
         $ionicPlatform.ready(function () {
             if (window.StatusBar) {
                 // org.apache.cordova.statusbar required
