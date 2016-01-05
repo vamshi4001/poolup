@@ -1,5 +1,5 @@
 <style>
-    #map, .list.card {
+    #map, .list.card.map-page {
         width: 100%;
         height: 100%;
     }
@@ -26,7 +26,7 @@
     <ion-tabs class="tabs-top tabs-light">
         <ion-tab title="Explore">
             <ion-content class="has-header has-tabs top padding">
-                <div class="list card" data-tap-disabled="true">
+                <div class="list card map-page" data-tap-disabled="true">
                     <img src="img/me.png" alt="" class="me-pin">
                     <div class="map" id="map" data-tap-disabled="true"></div>
                 </div>
@@ -34,14 +34,14 @@
         </ion-tab>        
         <ion-tab title="Browse">
           <ion-content class="has-header has-tabs top padding" scroll="false">
-                <div class="list card" ng-show="locations.length==0">
+                <div class="list card map-page" ng-show="locations.length==0">
                     <div class="item item-avatar">
                         <img src="img/profile.png">
                         <h2>No cars available!</h2>
                         <p>Please check after some time</p>
                     </div>
                 </div>
-                <div class="list card" ng-show="locations.length>0">
+                <div class="list card map-page" ng-show="locations.length>0">
                     <p style="padding:10px">Available cars in your area - we're working on helping you to call'em!</p>
                     <ion-content>
                         <div class="item item-icon-left item-icon-right" ng-repeat="item in locations track by item.userid">

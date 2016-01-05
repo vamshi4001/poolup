@@ -1,7 +1,7 @@
 {
-  "name": "ionic-oauth",
+  "name": "oddevencarpool",
   "version": "1.0.0",
-  "description": "ionic-oauth: An Ionic project",
+  "description": "oddevencarpool:collaborative carpooling",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

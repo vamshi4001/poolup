@@ -5,6 +5,7 @@ angular.module("oyedelhi")
   $scope.enable = false;
   $scope.enrolled = false;
   $scope.enrolmentDetails = {};
+  $scope.enrolmentDetails.isOdd = false;
   $scope.changeEnabled = function(value){
     var vehicleInfo =  Parse.Object.extend("vehicleInfo");
     var vehicle = new Parse.Query(vehicleInfo);
@@ -110,7 +111,8 @@ angular.module("oyedelhi")
           "enable":true
         }).then(function(object){
           $scope.enrolled = true;
-          $scope.enrolmentDetails = object;
+          $scope.enrolmentDetails = object;   
+          $scope.assignOddEven();               
           $scope.enable = $scope.enrolmentDetails.attributes.enable;         
           $ionicLoading.hide();
           navigator.notification.alert(
@@ -145,6 +147,16 @@ angular.module("oyedelhi")
         });      
     }
   }
+  $scope.assignOddEven = function(){
+    if($scope.enrolmentDetails.attributes.platenumber && !isNaN($scope.enrolmentDetails.attributes.platenumber.substr(-1))){
+      if($scope.enrolmentDetails.attributes.platenumber.substr(-1)%2==0){
+        $scope.enrolmentDetails.isOdd = false;
+      }
+      else{
+        $scope.enrolmentDetails.isOdd = true;
+      }
+    }
+  }
   $scope.fetchDetails = function(){
     $ionicLoading.show();
     var query = new Parse.Query("vehicleInfo");
@@ -155,12 +167,14 @@ angular.module("oyedelhi")
           $ionicLoading.hide()
           $scope.enrolled = true;
           $scope.enrolmentDetails = object;
+          $scope.assignOddEven();
           $scope.enable = object.attributes.enable;
         }        
         else{
           $ionicLoading.hide()
           $scope.enrolled = false;
           $scope.enrolmentDetails = {};
+          $scope.assignOddEven();
         }
       },
       error: function(error) {

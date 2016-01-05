@@ -1,5 +1,5 @@
 <style>
-    .profile-item {
+  .profile-item {
     text-align: center;
   }
 
@@ -65,6 +65,14 @@
   .card .item.item-input input, .list-inset .item.item-input input, .padding > .list .item.item-input input, .padding-horizontal > .list .item.item-input input{
     padding-right: 0px;
   }
+  .item p.odd{
+    background-color: #e42112;
+    color: white;
+  }
+  .item p.even{
+    background-color: green;
+    color: white;
+  }
 </style>
 <ion-view view-title="Profile">
   <ion-nav-buttons side="primary">
@@ -84,8 +92,9 @@
             <button class="button button-assertive button-full" ng-click="openModal(1)" ng-show="!enrolled">Enroll Now</button>
             <div class="profile-info" ng-show="enrolled">
               <p>Phone: {{enrolmentDetails.attributes.mobile}}</p>
-              <p>Plate: {{enrolmentDetails.attributes.platenumber}}</p>              
-              <button class="button button-outline button-assertive button-block" href="#/app/explore" ng-show="enrolled">Explore Around</button>              
+              <p class="platecolor odd" ng-show="enrolmentDetails.isOdd">Odd Plate: {{enrolmentDetails.attributes.platenumber}}</p>              
+              <p class="platecolor even" ng-show="!enrolmentDetails.isOdd">Even Plate: {{enrolmentDetails.attributes.platenumber}}</p>              
+              <a class="button button-outline button-assertive button-block" href="#/app/explore" ng-show="enrolled">Explore Around</a>              
             </div>            
           </ion-item>
           <div class="item item-toggle" ng-show="enrolled">

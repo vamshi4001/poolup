@@ -35,21 +35,23 @@
         white-space: normal;
     }
 </style>
-<ion-content class="top padding has-header">
-  <div class="list card">
-      <ion-item class="profile-item">
-        <div class="profile-picture big-profile-picture">
-          <img src="img/profile.png">
-        </div>
-        <h2 class="profile-name dark">Odd Even</h2>
-        <div class="profile-info">
-          <p>Colaborative Carpooling</p>
-        </div>  
-        <button class="button button-block icon-left ion-social-facebook facebook-blue" ng-click="fbLogin()">Signin with Facebook</button>     
-        <div class="profile-info">
-          <p>Trust us, we won't post anything.</p>
-          <p>By signing up, you agree to our terms and conditions of using this application</p>
-        </div>  
-      </ion-item>      
-  </div>
-</ion-content>
+<ion-view hide-nav-bar="true">
+  <ion-content class="top padding has-header">
+    <div class="list card">
+        <ion-item class="profile-item">
+          <div class="profile-picture big-profile-picture">
+            <img src="img/profile.png">
+          </div>
+          <h2 class="profile-name dark">Odd Even</h2>
+          <div class="profile-info">
+            <p>Colaborative Carpooling</p>
+          </div>  
+          <button class="button button-block icon-left ion-social-facebook facebook-blue" ng-click="fbLogin()">Signin with Facebook</button>     
+          <div class="profile-info">
+            <p>Trust us, we won't post anything.</p>
+            <p>By signing up, you agree to our terms and conditions of using this application</p>
+          </div>  
+        </ion-item>      
+    </div>
+  </ion-content>
+</ion-view>
