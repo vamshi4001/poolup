@@ -1,4 +1,4 @@
-# OyeDelhi #
+# PoolUp #
 
 ## Plugins ##
 * cordova-plugin-whitelist 1.2.0 "Whitelist"
